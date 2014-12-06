@@ -1,0 +1,30 @@
+extends layout
+
+block body
+	#header
+		#logo Gotham Transit
+		#filter
+			input#input(placeholder="Which line?" ng-model="filter" ng-change="setFilter()")
+
+	#results
+		ul
+			li.line(ng-repeat="line in lines" ng-show="testFilter()")
+				.type
+					img(ng-show="line.type == 'LIRR'" src="/static/glyphs/glyphicons-15-train.png")
+					img(ng-show="line.type == 'BT'" src="/static/glyphs/glyphicons-29-cars.png")
+					img(ng-show="line.type == 'bus'" src="/static/glyphs/glyphicons-32-bus.png")
+					img(ng-show="line.type == 'MetroNorth'" src="/static/glyphs/glyphicons-15-train.png")
+					img(ng-show="line.type == 'subway'" src="/static/glyphs/glyphicons-458-transfer.png")
+				.swatch
+					div.good(ng-show="line.status == 'GOOD SERVICE'")
+					div.bad(ng-show="line.status == 'DELAYS'")
+					div.alert(ng-show="line.status == 'SERVICE CHANGE'")
+				div {{ line.name }}
+				div {{ line.status }}
+				div {{ line.time }}
+
+
+
+	#shader 
+	#background
+		img(src="/static/map.jpg")
