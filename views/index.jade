@@ -2,29 +2,41 @@ extends layout
 
 block body
 	#header
-		#logo Gotham Transit
-		#filter
-			input#input(placeholder="Which line?" ng-model="filter" ng-change="setFilter()")
+		#logo
+			.text Gotham Transit
+			img(src="/static/batman.png")
+			.aligner
+		#filterBar
+			.wrapper
+				input#input(placeholder="Search for a line..." ng-model="filter" ng-change="setFilter()")
 
 	#results
 		ul
-			li.line(ng-repeat="line in lines" ng-show="testFilter()")
-				.type
-					img(ng-show="line.type == 'LIRR'" src="/static/glyphs/glyphicons-15-train.png")
-					img(ng-show="line.type == 'BT'" src="/static/glyphs/glyphicons-29-cars.png")
-					img(ng-show="line.type == 'bus'" src="/static/glyphs/glyphicons-32-bus.png")
-					img(ng-show="line.type == 'MetroNorth'" src="/static/glyphs/glyphicons-15-train.png")
-					img(ng-show="line.type == 'subway'" src="/static/glyphs/glyphicons-458-transfer.png")
-				.swatch
-					div.good(ng-show="line.status == 'GOOD SERVICE'")
-					div.bad(ng-show="line.status == 'DELAYS'")
-					div.alert(ng-show="line.status == 'SERVICE CHANGE'")
-				div {{ line.name }}
-				div {{ line.status }}
-				div {{ line.time }}
+			li.line(ng-repeat="line in lines | orderBy:['-isFavorite', 'type']" ng-show="searchFilter()")
+				.wrapper
+					.type
+						.aligner
+						img(ng-show="line.type == 'lirr'" src="/static/glyphs/glyphicons-15-train.png")
+						img(ng-show="line.type == 'bt'" src="/static/glyphs/glyphicons-29-cars.png")
+						img(ng-show="line.type == 'bus'" src="/static/glyphs/glyphicons-32-bus.png")
+						img(ng-show="line.type == 'metronorth'" src="/static/glyphs/glyphicons-15-train.png")
+						img(ng-show="line.type == 'subway'" src="/static/glyphs/glyphicons-458-transfer.png")
+					.background
+					.time {{ line.time }}
+					.name
+						.text {{ line.name }}
+					.status
+						.text.change(ng-if="line.status == 'service change'" ng-click="showText()") STATUS CHANGE
+						.text.good(ng-if="line.status == 'good service'") GOOD SERVICE
+						.text.work(ng-if="line.status == 'planned work'" ng-click="showText()") PLANNED WORK
+						.text.delays(ng-if="line.status == 'delays'") DELAYS
+					
+
+	#textDisplay(ng-show="doShowText")
+		.text(ng-bind-html="text")
+		.button(ng-click="closeText()") OK
 
 
-
-	#shader 
+	#shader(ng-show="doShowShader")
 	#background
 		img(src="/static/map.jpg")

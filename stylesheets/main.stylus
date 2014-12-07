@@ -1,7 +1,8 @@
-	*
+*
 	padding 0
 	margin 0
 	font-family montserrat
+	list-style-type none
 	
 @font-face
 	font-family batman_light
@@ -20,100 +21,213 @@
 	src url('/static/Montserrat-Regular.ttf')
 
 
-	
-
-body
-	overflow hidden
-
-#logo
-	font-family batman_dark
-	font-size 22px
-	color #fff200
-	text-align center
-	background #000
-	padding 12px
-	    
-#filter
-	background #888
-	padding-top 12px
-	padding-bottom 12px
-	text-align center
-
-#input
-	width 300px
-	font-size 16px
-	padding-top 4px
-	padding-bottom 4px
-	text-align center
-	outline none
-	border 2px solid black
-	font-family batman_dark
-	background #0060A8
-	text-transform uppercase
-	border-radius 4px
-	&::-webkit-input-placeholder
-		color white
-
-
-#background
-	position absolute
+#shader
+	position fixed
+	z-index 999
 	left 0px
 	right 0px
 	top 0px
 	bottom 0px
-	z-index -1
-	opacity .5
+	background black
+	opacity .9
+	
 
+body
+	margin-top 55px
+
+#logo
+	position fixed
+	left 0
+	top 0
+	height 55px
+	width 92px
+	background #3a414f
+	text-align center
+	opacity 1
+	.text
+		display inline-block
+		z-index 2
+		left 64px
+		font-size 12px
+		font-family batman_dark
+		color #fff
+		opacity .9
+		vertical-align middle
+	img
+		position absolute
+		left 6px
+		width 80px
+		top 6px
+		z-index -1
 		
+
+
+
+.aligner
+	display inline-block
+	vertical-align middle
+	height 100%		
+	
+
+
+#filterBar
+	position fixed
+	left 92px
+	right 0
+	height 36px
+	
+	background #000000
+	z-index -2
+	text-align center
+	
+	.wrapper
+		position absolute
+		top 11px
+		left 5%
+		right 5%
+
+#input
+	width 100%
+	font-size 13px
+	padding-top 4px
+	padding-bottom 4px
+	margin-top 3px
+	text-align center
+	outline none
+	color #3a414f
+	border 2px solid black
+	font-family batman_dark
+	background #EEEEEE
+	box-shadow: inset 1px 1px 2px 0 #707070;
+	text-transform uppercase
+	border-radius 4px
+	&::-webkit-input-placeholder
+		color #3a414f
+
+
+#background
+	position fixed
+	left 0px
+	right 0px
+	top 0px
+	bottom 0px
+	z-index -1000
+	opacity .5
 	overflow hidden
 	
 
 #header
-	box-shadow 1px 1px 2px #000
-	opacity .9
-	overflow hidden
-	border-bottom 2px solid black
+	position fixed
+	z-index 1
+	top 0px
+	left 0px
+	right 0px
+	height 55px
+	box-shadow 1px 1px 2px #484848
+	background black
 	
 .line
-	
-	background white
-	opacity .8
-	z-index 0
-
 	position relative
-	border-bottom 2px solid black
-	height 128px
-	
-		
-#results
-	position absolute
-	left 0
-	right 0
-	top 130px
-	bottom 0
-	overflow-y scroll
-	
-.swatch div
-	position absolute
-	opacity .5
 	z-index -1
-	width 100% 
-	height 100%
-.swatch .bad
-	background red
-.swatch .alert
-	background yellow	
-.swatch	.good
-	background green
-	
+	.wrapper
+		.background
+			position absolute
+			z-index -1
+			width 100%
+			height 100%
+			background #ffffff
+			opacity .7
+		.time
+			text-align center
+			color #888
+			font-size 10px
+		.name
+			position absolute
+			top 10px
+			left 48px
+			right 48px
+			height 40px
+			line-height 40px
+			text-align center
+			.text
+				display inline-block
+				font-size 15px
+				line-height 13px
+				font-family batman_dark
+				vertical-align middle
+		.type
+			img
+				display inline-block
+				vertical-align middle
+			position absolute
+			left 8px
+			top 0px
+			bottom 8px
+			width 40px
+			text-align center
+		.status
+			position absolute
+			left 0
+			right 0
+			bottom 12px
+			text-align center
+			.change
+				text-decoration underline
+				color blue
+			.good
+				color green
+			.delays
+				color red
+			.work
+				color orange
+				text-decoration underline
+		position absolute
+		left 2px
+		right 2px
+		top 1px
+		bottom 1px
+		border 2px solid black
+		border-radius 4px	
+	float left
+	width 200px
+	z-index 0
+	position relative
+	height 84px	 	   
 
-.type
-	position absolute
-	left 0px
-	width 48px
-	height 48px
-	text-align center
-	img
-		padding 6px
+						
 		
+#textDisplay
+	position fixed
+	left 10%
+	top 10%
+	right 10%
+	bottom 20%
+	background white
+	border 2px solid black
+	border-radius 4px
+	z-index 1000
+	text-align center
+	padding-bottom 48px
+	.text
+		padding 8px
+		background #ccc
+		position absolute
+		left 12px
+		top 12px
+		bottom 72px
+		right 12px
+		overflow-y scroll
+	.button
+		
+		position absolute
+		left 0px
+		right 0px
+		bottom 0px
+		margin 12px
+		border 1px solid black
+		padding-top 12px
+		font-size 24px
+		text-align center
+		height 36px
+		font-family batman_dark
 		

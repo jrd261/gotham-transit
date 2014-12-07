@@ -2,7 +2,9 @@
   "name": "boilerplate",
   "version": "0.0.0",
   "dependencies": {
+    "MD5": "^1.2.1",
     "aws-sdk": "^2.0.30",
+    "body-parser": "^1.10.0",
     "express": "^4.10.4",
     "express-session": "^1.9.3",
     "gulp": "^3.8.10",
@@ -16,8 +18,10 @@
     "gulp-uglify": "^1.0.1",
     "jade": "^1.8.1",
     "jquery": "^2.1.1",
+    "md5": "^1.0.0",
     "node-jquery": "^0.1.0",
     "passport": "^0.2.1",
+    "passport-local": "^1.0.0",
     "xml2js": "^0.4.4"
   },
   "devDependencies": {

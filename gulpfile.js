@@ -12,7 +12,7 @@ gulp.task('copy-bower-components', function(){
 });
 
 gulp.task('copy-node-components', function(){
-	return gulp.src(['node_modules/*', 'models/*', 'views/*', 'controllers/*', 'routes/*', 'app.js'], {base: './'})
+	return gulp.src(['noe_modules/*', 'models/*', 'views/*', 'controllers/*','routes/*', 'app.js'], {base: './'})
 	.pipe(gulp.dest('build'));
 });
 
@@ -37,7 +37,7 @@ gulp.task('watch', function() {
   gulp.watch('javascript/**/*.js', ['copy-javascript-components']);
   gulp.watch('stylesheets/**/*.stylus', ['copy-stylesheet-components']);
   gulp.watch('views/**/*.jade', ['copy-node-components']);
-
+  gulp.watch('config.development.json', ['configure-development']);
   gulp.watch(
   	['models/**/*', 'views/**/*', 'controllers/**/*', 'routes/**/*', 'app.js'], ['copy-node-components'])
 });
@@ -57,3 +57,14 @@ gulp.task('default', [
 	]);
 
 
+gulp.task('configure-development', function(){
+	return gulp.src('config.development.json')
+	.pipe(rename('config.json'))
+	.pipe(gulp.dest('build/'));
+});
+
+gulp.task('configure-production', function(){
+	return gulp.src('config.production.json')
+	.pipe(rename('config.json'))
+	.pipe(gulp.dest('build/'));
+});
