@@ -1,25 +1,9 @@
 {
-	"isDevelopment": false,
+	"isDevelopment": true,
 	"DynamoDBOptions": {
 		"endpoint": "http://localhost:3001",
 		"region": "development",
 		"accessKeyId": "fakeAccessKeyId",
 		"secretAccessKey": "fakeSecretAccessKey"
-	},
-	"TableName": "gothamTransitProfiles",
-	"DynamoDBTableOptions": {
-		"TableName": "table",
-		"AttributeDefinitions": [{
-			"AttributeName": "email",
-			"AttributeType": "S"
-		}],
-		"KeySchema": [{
-			"AttributeName": "email",
-			"KeyType": "HASH"
-		}],
-		"ProvisionedThroughput": {
-			"ReadCapacityUnits": 1,
-			"WriteCapacityUnits": 1
-		}
 	}
 }

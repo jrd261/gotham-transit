@@ -1,0 +1,6 @@
+{
+	"isDevelopment": false,
+	"DynamoDBOptions": {
+		"region": "us-east-1"
+	}
+}

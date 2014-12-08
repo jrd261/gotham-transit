@@ -9,26 +9,20 @@ app.controller('main', function($scope, $http, $sce){
 	};
 	$scope.refreshStatus = function(){
 		$http.get('status')
-		.success(function(data){
-			$scope.lines = data
+		.success(function(lines){
+			$scope.lines = lines
 			$scope.refreshFavorites();
 		})
+		setTimeout(onResize, 500);
 	};
-	window.t = $scope;
-
-	$scope.id = localStorage.getItem('id');
-	if(!$scope.id){
-		$scope.id = Math.random().toString(36).substring(7);
-		localStorage.setItem('id', $scope.id);
-	}
-	$http.get('favorites/' + $scope.id)
-	.success(function(items){
-		$scope.favorites = items;
-		$scope.refreshFavorites();
-	})
+	setInterval($scope.refreshStatus, 5 * 60 * 1000);
+	$scope.refreshStatus();
 	
+
+
+	/* Tracking Favorites */
+	$scope.favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 	$scope.refreshFavorites = function(){
-		// Modify lines to indicate favorites
 		for(var i=0; i<$scope.lines.length; i++){
 			$scope.lines[i].isFavorite = false;
 			for(var j=0; j<$scope.favorites.length; j++){
@@ -39,9 +33,19 @@ app.controller('main', function($scope, $http, $sce){
 			}
 		}
 	};
-
-	setInterval($scope.refreshStatus, 5 * 60 * 1000);
-	$scope.refreshStatus();
+	$scope.removeFavorite = function(){
+		var i = $scope.favorites.indexOf(this.line.id);
+		if(i > -1){
+			$scope.favorites.splice(i, 1);
+		}
+		localStorage.setItem('favorites', JSON.stringify($scope.favorites));
+		$scope.refreshFavorites();
+	};
+	$scope.addFavorite = function(){
+		$scope.favorites.push(this.line.id);
+		localStorage.setItem('favorites', JSON.stringify($scope.favorites));
+		$scope.refreshFavorites();
+	};
 
 	$scope.searchFilter = function(){
 		var filter = ($scope.filter || '').toLowerCase();
@@ -62,7 +66,7 @@ app.controller('main', function($scope, $http, $sce){
 
 });
 
-
+/* Dyanmic Resizing Stuffs */
 function onResize(){
 	if(!$('.line')[0]){
 		setTimeout(onResize, 50);

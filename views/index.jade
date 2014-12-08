@@ -30,7 +30,9 @@ block body
 						.text.good(ng-if="line.status == 'good service'") GOOD SERVICE
 						.text.work(ng-if="line.status == 'planned work'" ng-click="showText()") PLANNED WORK
 						.text.delays(ng-if="line.status == 'delays'") DELAYS
-					
+					.star
+						img(ng-hide="line.isFavorite" ng-click="addFavorite()" src="/static/star0.png")
+						img(ng-show="line.isFavorite" ng-click="removeFavorite()" src="/static/star1.png")
 
 	#textDisplay(ng-show="doShowText")
 		.text(ng-bind-html="text")

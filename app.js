@@ -28,28 +28,7 @@ var cache = {
 };
 
 
-/* Create Table If It Doesn't Exist */
-db.describeTable({TableName: "gothamTransitFavorites"}, function(error, data){
-	if(!error){
-		return
-	}
-	var options = {
-		"TableName": "gothamTransitFavorites",
-		"AttributeDefinitions": [{
-			"AttributeName": "id",
-			"AttributeType": "S"
-		}],
-		"KeySchema": [{
-			"AttributeName": "id",
-			"KeyType": "HASH"
-		}],
-		"ProvisionedThroughput": {
-			"ReadCapacityUnits": 1,
-			"WriteCapacityUnits": 1
-		}
-	};
-	db.createTable(options, function(error, data){});
-});
+
 
 
 /* Refresh MTA Status */
@@ -126,38 +105,16 @@ app.get('/status', function(request, response){
 		response.json(cache.lines);
 	});
 });
-app.get('/favorites/:id', function(request, response){
-	var id = request.param('id');
-	if(!id){
-		return response.json([]);
-	}
-	Favorites.get(id, function(error, favorites){
-		console.log(error)
-		console.log(favorites)
-		if(error){
-			return response.json([]);
-		}
-		return response.json(favorites.items);
-	});
-});
-app.post('/favorites/:id', function(request, response){
-	var id = request.param('id');
-	if(!id){
-		return response.json([]);
-	}
-	var items = request.body;
-	if(!items){
-		items = [];
-	}
-	var favorites = new Favorites({id:id, items:items});
-	favorites.put(function(error){
-		console.log(error)
-		if(error){
-			return response.json([]);
-		}
-		return response.json(items);
-	});
-});
+
+
+
+
+
+/* Launch Application */
+http.createServer(app).listen(app.get('port'));
+
+
+
 
 
 /* Favorites Model */
@@ -197,7 +154,58 @@ Favorites.prototype.put = function(callback){
 	}
 	db.putItem(options, callback);
 }
+app.get('/favorites/:id', function(request, response){
+	var id = request.param('id');
+	if(!id){
+		return response.json([]);
+	}
+	Favorites.get(id, function(error, favorites){
+		console.log(error)
+		console.log(favorites)
+		if(error){
+			return response.json([]);
+		}
+		return response.json(favorites.items);
+	});
+});
+app.post('/favorites/:id', function(request, response){
+	var id = request.param('id');
+	if(!id){
+		return response.json([]);
+	}
+	var items = request.body;
+	if(!items){
+		items = [];
+	}
+	var favorites = new Favorites({id:id, items:items});
+	favorites.put(function(error){
+		console.log(error)
+		if(error){
+			return response.json([]);
+		}
+		return response.json(items);
+	});
+});
 
-
-/* Launch Application */
-http.createServer(app).listen(app.get('port'));
+/* Create Table If It Doesn't Exist */
+db.describeTable({TableName: "gothamTransitFavorites"}, function(error, data){
+	if(!error){
+		return
+	}
+	var options = {
+		"TableName": "gothamTransitFavorites",
+		"AttributeDefinitions": [{
+			"AttributeName": "id",
+			"AttributeType": "S"
+		}],
+		"KeySchema": [{
+			"AttributeName": "id",
+			"KeyType": "HASH"
+		}],
+		"ProvisionedThroughput": {
+			"ReadCapacityUnits": 1,
+			"WriteCapacityUnits": 1
+		}
+	};
+	db.createTable(options, function(error, data){});
+});
