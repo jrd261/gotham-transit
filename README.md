@@ -21,7 +21,7 @@ What's Next?
 ------------
 (Assuming this were a real product)
 
-First priority would be building in analytics and getting some intuition about how people use the app, i.e. what lines are popular, how many favorites do they have, what search terms are entered, etc.
+Aside from bug fixes and polish, first priority would be building in analytics and getting some intuition about how people use the app, i.e. what lines are popular, how many favorites do they have, what search terms are entered, etc.
 
 Additionally, using that data and some common sense, the live search can be improved. B8 should match B1 - B81, but only line name/types are used. A more sophisticated algorithm (or just hard coded tokens) can improve the UX.
 
@@ -52,16 +52,12 @@ First, lets quantify just how much data we are working with. We'll ignore the hu
 
 BUT WAIT! THERE'S MORE!
 
-If we want to get clever we can just record the initial state, about 50 bytes, and store timestamped differences. We can get a unix timestamp, line id, and state in a 64 bit integer, no problem. Pessimistically, lets say each line changes status 10 times a day. That's 50 * 10 * 8 (bytes) * 365 = 1.46MB/yr! Dust off your 386 and put get the 3.5" floppy's ready. 
+If we want to get clever we can just record the initial state, and store timestamped differences. We can get a unix timestamp, line id, and state in a 64 bit integer, no problem. Pessimistically, lets say each line changes status 10 times a day. That's 50 * 10 * 8 (bytes) * 365 = 1.46MB/yr! Dust off your 386 and put get the double sided 3.5" floppy's ready. 
 
 Bottom line, this is not a big data problem. Binning by DOW, time, location, etc, is going to take a fraction of a second, even on a few years of data. 
 
-In this case, where space is not really an issue, I would go with the solution that a team can build quickly, and provide an interface and format that a consumer (a data scientist perhaps) would intuitively understand. Keep it simple.
+In this case, where space is not really an issue, I would go with a solution that a team can build quickly, and provide an interface and format that a consumer (a data scientist perhaps) would intuitively understand. Keep it simple.
 
 That would lead me to recommend a traditional database table, indexed by date, that stores the status of each line. If the status text is put in some key document store, that can be included in the table as well.
 
-Given the relatively small size of the data set, I would offer and endpoint that delivers only the ability to filter by a single date range. Depending on feedback from the consumer, a binary format or something as simple as CSV could be the optimal data encoding. 
-
-
-
-
+I would offer a single endpoint that filters by a single date range. Depending on feedback from the consumer, a binary format or something as simple as CSV could be the optimal data encoding. 
