@@ -52,7 +52,7 @@ First, lets quantify just how much data we are working with. We'll ignore the hu
 
 BUT WAIT! THERE'S MORE!
 
-If we want to get clever we can just record the initial state, about 50 bytes, and store timestamped differences. We can get a unix timestamp, line id, and state in a 64 bit integer, no problem. Pessimistically, lets say each line changes status 10 times a day. That's 50 * 10 * 8 (bytes) * 365 = 1.46MB! Dust off your 386 and put get the 3.5" floppy's ready. 
+If we want to get clever we can just record the initial state, about 50 bytes, and store timestamped differences. We can get a unix timestamp, line id, and state in a 64 bit integer, no problem. Pessimistically, lets say each line changes status 10 times a day. That's 50 * 10 * 8 (bytes) * 365 = 1.46MB/yr! Dust off your 386 and put get the 3.5" floppy's ready. 
 
 Bottom line, this is not a big data problem. Binning by DOW, time, location, etc, is going to take a fraction of a second, even on a few years of data. 
 
