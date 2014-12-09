@@ -64,6 +64,6 @@ Bottom line: this is not a big data problem. Binning by DOW, time, location, etc
 
 In this case, where space is not really an issue, I would go with a solution that a team can build quickly (and get onto the next project), and provide an interface and format that a consumer (a data scientist perhaps) would intuitively understand. Keep it simple.
 
-I'd recommend a traditional database table, indexed by date, that stores the status of each line. If the status text is put in some key document store, a key/url can be included in the table output as well.
+I'd recommend a traditional database table, indexed by date, one column per line, that stores the status of each line. If the status text is put in some key document store, a key/url can be included in the table output as well.
 
 I would offer a single endpoint that filters by a single date range or does a complete data dump. Depending on feedback from the consumers, a binary format or something as simple as CSV could be the optimal data encoding. 
