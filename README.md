@@ -15,6 +15,14 @@ I would have probably put in authentication with passport local strategy. My onl
 To show a little bit of database work, I built an endpoint to store and retrieve a user's favorites in an Amazon DynamoDB table (the front end doesn't use it). GET/POST a json list to/from "/favorites/:id". 
 
 
+Technologies
+------------
+
+The front-end is angular. I coded the stylesheets in stylus and the HTML in jade. The back-end is nodejs/express. I used the Amazon SDK to connect to DynamoDB.
+
+I used bower for front end dependencies and the standard npm for back-end dependencies. Gulp does the nifty task running (just started using it in lieu of grunt).
+
+
 What's Next? 
 ------------
 (Assuming this were a real product)
