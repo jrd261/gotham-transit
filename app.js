@@ -3,22 +3,15 @@ var express = require('express');
 var http = require('http');
 var app = express();
 var path = require('path');
-var aws = require('aws-sdk');
 var xml2js = require('xml2js');
 var md5 = require('MD5');
-var bodyParser = require('body-parser');
-var db = new aws.DynamoDB(config.DynamoDBOptions);
 
 
-/* App Configuration */
+/* App Configuration and Middleware */
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname , 'views'));
 app.set('view engine', 'jade');
-
-
-/* Middleware */
 app.use('/static', express.static(__dirname + '/public'));
-app.use(bodyParser.json());
 
 
 /* Initialize In-Memory Cache */
@@ -26,9 +19,6 @@ var cache = {
 	timestamp: 0,
 	lines: [],
 };
-
-
-
 
 
 /* Refresh MTA Status */
@@ -74,7 +64,6 @@ function refreshStatus(callback){
 				});
 			}
 		}
-		console.log('MEA Status Refreshed')
 		cache.lines = lines;
 		callback(null);
 	}
@@ -107,17 +96,12 @@ app.get('/status', function(request, response){
 });
 
 
-
-
-
-/* Launch Application */
-http.createServer(app).listen(app.get('port'));
-
-
-
-
-
-/* Favorites Model */
+/* None of this is actually used by the front end but is still functional. 
+Just an example of how I would store favorites on AWS dynamoDB. */
+var aws = require('aws-sdk');
+var db = new aws.DynamoDB(config.DynamoDBOptions);
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 function Favorites(options){
 	this.id = options.id || 'default';
 	this.items = options.items || [];
@@ -160,8 +144,6 @@ app.get('/favorites/:id', function(request, response){
 		return response.json([]);
 	}
 	Favorites.get(id, function(error, favorites){
-		console.log(error)
-		console.log(favorites)
 		if(error){
 			return response.json([]);
 		}
@@ -179,15 +161,12 @@ app.post('/favorites/:id', function(request, response){
 	}
 	var favorites = new Favorites({id:id, items:items});
 	favorites.put(function(error){
-		console.log(error)
 		if(error){
 			return response.json([]);
 		}
 		return response.json(items);
 	});
 });
-
-/* Create Table If It Doesn't Exist */
 db.describeTable({TableName: "gothamTransitFavorites"}, function(error, data){
 	if(!error){
 		return
@@ -209,3 +188,6 @@ db.describeTable({TableName: "gothamTransitFavorites"}, function(error, data){
 	};
 	db.createTable(options, function(error, data){});
 });
+
+/* Launch Application */
+http.createServer(app).listen(app.get('port'));

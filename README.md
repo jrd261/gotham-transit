@@ -6,7 +6,7 @@ Summary
 
 I've always thought those table-side diner jukeboxes were interesting, so I used that as my design inspiration.
 
-The server retrieves and parses the MTA feed every five minutes and caches it. It delivers the data to the client asyncronously (I believe the page refreshes the data every five minutes as well).
+The server retrieves and parses the MTA feed every five minutes and caches it. It delivers the data to the client asynchronously (I believe the page refreshes the data every five minutes as well).
 
 A single search field does live filtering on all reported lines (by name and type). Instead of a full authentication system (why add so much friction for basic functionality?), favorites are persisted client side (local storage). Favorited lines appear first in the list.
 
@@ -14,7 +14,7 @@ In case you actually wanted authentication just to see how I'd implement it, I w
 
 In case you wanted to see me implement a database I did build an endpoint to store and retrieve a user's favorites in an Amazon DynamoDB table. GET/POST a json list to/from "/favorites/:id". You can run a local dynamodb to test it.
 
-In most situations building exactly to spec is critically imporant but I thought this was a great oppurtunity to take a few liberties on implementation.
+In most situations building exactly to spec is critically important but I thought this was a great opportunity to take a few liberties on implementation.
 
 
 What's Next? 
@@ -46,3 +46,4 @@ node app.js
 Serve the burgers at localhost:3000.
 
 
+s
